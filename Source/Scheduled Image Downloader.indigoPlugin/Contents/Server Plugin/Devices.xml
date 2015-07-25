@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<Devices>
+	<!-- a device definition for downloading images from a specific URL -->
+	<Device type="custom" id="imageDownloadDevice">
+		<Name>Image Download Source</Name>
+		<ConfigUI>	
+			<Field id="downloadOptionsTitle" type="label" fontColor="darkGray">
+				<Label>DOWNLOAD OPTIONS</Label>
+			</Field>
+			<Field id="downloadOptionsSeparator" type="separator" />
+			<Field type="label" id="urlInstructions" fontSize="small">
+				<Label>You may enter a complete URL in the box below or, optionally, a URL that includes a pattern of %d. If a pattern is included then the plugin will download images by replacing %d with a number between the beginning and ending pattern numbers below. The save filename works identically.</Label>
+			</Field>
+			<Field type="label" id="urlInstructions2" fontSize="small" alignWithControl="true">
+				<Label>EX: http://www.example.com/weather/radar.jpg</Label>
+			</Field>
+			<Field type="label" id="urlInstructions3" fontSize="small" alignWithControl="true">
+				<Label>EX: http://www.example.com/weather/radar%d.jpg</Label>
+			</Field>
+			<Field type="label" id="urlInstructions4" fontSize="small" alignWithControl="true">
+				<Label>     This would download http://www.example.com/weather/radar1.jpg, http://www.example.com/weather/radar2.jpg, etc.</Label>
+			</Field>
+			<Field id="urlPattern" type="textfield">
+				<Label>URL:</Label>
+			</Field>
+			<Field id="authenticationType" type="menu" defaultValue="none">
+				<Label>Website Authentication:</Label>
+				<List>
+					<Option value="none">-- None Required --</Option>
+					<Option value="Basic">Basic Authentication</Option>
+					<Option value="Digest">Digest Authentication</Option>
+				</List>
+			</Field>
+			<Field id="urlUsername" type="textfield" visibleBindingId="authenticationType" visibleBindingValue="Basic,Digest">
+				<Label>Username (if required):</Label>
+			</Field>
+			<Field id="urlPassword" type="textfield" visibleBindingId="authenticationType" visibleBindingValue="Basic,Digest">
+				<Label>Password (if required):</Label>
+			</Field>
+			<Field id="saveFilename" type="textfield">
+				<Label>Save to File:</Label>
+			</Field>
+			<Field id="updateInterval" type="textfield" defaultValue="60">
+				<Label>Update Interval (sec):</Label>
+			</Field>
+			
+			<Field id="patternOptionsTitle" type="label" fontColor="darkGray">
+				<Label>PATTERN OPTIONS</Label>
+			</Field>
+			<Field id="patternOptionsSeparator" type="separator" />
+			<Field type="label" id="patternInstructions" fontSize="small">
+				<Label>These values are only necessary if using a pattern URL as described above. The delay allows adding a delay between file downloads in the queue created by the pattern.</Label>
+			</Field>
+			<Field id="patternStartNumber" type="textfield">
+				<Label>Pattern Start #:</Label>
+			</Field>
+			<Field id="patternEndNumber" type="textfield">
+				<Label>Pattern End #:</Label>
+			</Field>
+			<Field id="patternCommandDelay" type="textfield" defaultValue="0.1">
+				<Label>Pattern Delay:</Label>
+			</Field>
+		</ConfigUI>
+		<UiDisplayStateId>downloadStatus</UiDisplayStateId>
+		<States>
+			<State id="downloadStatus">
+				<ValueType>Boolean</ValueType>
+				<TriggerLabel>Current Image Available</TriggerLabel>
+				<ControlPageLabel>Current Image Available</ControlPageLabel>
+			</State>
+			<State id="lastProcessing">
+				<ValueType>String</ValueType>
+				<TriggerLabel>Last Successful Download</TriggerLabel>
+				<ControlPageLabel>Last Successful Download</ControlPageLabel>
+			</State>
+		</States>
+	</Device>
+</Devices>

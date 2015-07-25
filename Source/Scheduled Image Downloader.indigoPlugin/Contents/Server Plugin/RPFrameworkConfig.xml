@@ -1,0 +1,66 @@
+<RPFrameworkConfig>
+	<pluginConfig>
+		<deviceMapping>
+			<device indigoId="imageDownloadDevice" className="ScheduledImageDownloadDevice" />
+		</deviceMapping>
+		<devices>
+			<device indigoId="imageDownloadDevice">
+				<params>
+					<param indigoId="urlPattern" paramType="ParamTypeString" isRequired="True">
+						<validationExpression><![CDATA[^http://.+$]]></validationExpression>
+						<invalidValueMessage><![CDATA[Please enter the URL (starting with http://) from which the images should be downloaded]]></invalidValueMessage>
+					</param>
+					<param indigoId="updateInterval" paramType="ParamTypeInteger" isRequired="True">
+						<minValue>1</minValue>
+						<maxValue>999999999</maxValue>
+						<defaultValue>60</defaultValue>
+						<invalidValueMessage><![CDATA[Please enter the number of seconds between image downloads/updates]]></invalidValueMessage>
+					</param>
+					<param indigoId="patternStartNumber" paramType="ParamTypeInteger" isRequired="False">
+						<minValue>0</minValue>
+						<maxValue>999999999</maxValue>
+						<defaultValue>0</defaultValue>
+						<invalidValueMessage><![CDATA[Please enter the beginning number for numerical replacement patterns]]></invalidValueMessage>
+					</param>
+					<param indigoId="patternEndNumber" paramType="ParamTypeInteger" isRequired="False">
+						<minValue>0</minValue>
+						<maxValue>999999999</maxValue>
+						<defaultValue>0</defaultValue>
+						<invalidValueMessage><![CDATA[Please enter the ending number for numerical replacement patterns]]></invalidValueMessage>
+					</param>
+					<param indigoId="patternCommandDelay" paramType="ParamTypeFloat" isRequired="False">
+						<minValue>0</minValue>
+						<maxValue>999999999</maxValue>
+						<defaultValue>0.1</defaultValue>
+						<invalidValueMessage><![CDATA[Please enter the delay in seconds between pattern-queued downloads (decimal values are allowed)]]></invalidValueMessage>
+					</param>
+				</params>
+				<guiConfiguration>
+					<updateStatusPollerActionId>processImageDownload</updateStatusPollerActionId>
+				</guiConfiguration>
+				<deviceResponses>
+					<response id="fileDownloadedSuccessfully" respondToActionId="">
+						<criteriaFormatString><![CDATA[%cp:response%]]></criteriaFormatString>
+						<matchExpression><![CDATA[CMD_DOWNLOADFILE: Success]]></matchExpression>
+						<effects>
+							<effect effectType="RESPONSE_EFFECT_UPDATESTATE" evalResult="true">
+								<updateParam>downloadStatus</updateParam>
+								<updateValueFormat>True</updateValueFormat>
+							</effect>
+						</effects>
+					</response>
+				</deviceResponses>
+			</device>
+		</devices>
+		<actions>
+			<action indigoId="processImageDownload">
+				<commands>
+				<command>
+					<commandName>PROCESS_IMAGE_DOWNLOAD</commandName>
+					<commandFormat></commandFormat>
+				</command>
+			</commands>
+			</action>
+		</actions>
+	</pluginConfig>
+</RPFrameworkConfig>
